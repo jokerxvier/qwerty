@@ -44,7 +44,7 @@
 			</a>
 			
 			<a class="brand" href="index.html">
-				QC Admin				
+				<img src="<?php echo base_url(); ?>img/qc-guide-app.png">			
 			</a>		
 			
 			<div class="nav-collapse">
