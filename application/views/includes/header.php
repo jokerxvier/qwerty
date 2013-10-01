@@ -31,7 +31,7 @@
 			</a>
 			
 			<a class="brand" href="index.html">
-				Bootstrap Admin Template				
+				QC Admin				
 			</a>		
 			
 			<div class="nav-collapse">
@@ -39,7 +39,7 @@
 					
 					<li class="">						
 						<a href="signup.html" class="">
-							Don't have an account?
+							<!--Don't have an account?-->
 						</a>
 						
 					</li>
@@ -47,7 +47,7 @@
 					<li class="">						
 						<a href="index.html" class="">
 							<i class="icon-chevron-left"></i>
-							Back to Homepage
+							<!--Back to Homepage-->
 						</a>
 						
 					</li>
