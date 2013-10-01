@@ -1,7 +1,7 @@
 <form class="form-signin" action="<?php echo base_url();?>login/process" method="post">
   <h2 class="form-signin-heading">Please sign in</h2>
-  <input type="text" class="form-control" placeholder="Email address" autofocus="">
-  <input type="password" class="form-control" placeholder="Password">
+  <input type="text" class="form-control" placeholder="Email address" autofocus="" name="username">
+  <input type="password" class="form-control" placeholder="Password" name="password">
   <label class="checkbox">
     <input type="checkbox" value="remember-me"> Remember me
   </label>
