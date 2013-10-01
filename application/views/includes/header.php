@@ -59,8 +59,8 @@
 					
 					<li class="">						
 						<a href="index.html" class="">
-							<i class="icon-chevron-left"></i>
-							<!--Back to Homepage-->
+							<!--<i class="icon-chevron-left"></i>
+							Back to Homepage-->
 						</a>
 						
 					</li>
