@@ -13,7 +13,20 @@
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
 		
 	<link href="<?php echo base_url(); ?>css/style.css" rel="stylesheet" type="text/css">
+	
+	<!-- sign in / log in CSS-->
 	<link href="<?php echo base_url(); ?>css/pages/signin.css" rel="stylesheet" type="text/css">
+	<!--/sign in or log in CSS-->
+	
+	<!-- dashboard CSS-->
+	<link href="<?php echo base_url(); ?>css/pages/dashboard.css" rel="stylesheet">
+	<!-- /dashboard CSS-->
+	
+	<!--Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+		  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	
 
 </head>
 <body>
