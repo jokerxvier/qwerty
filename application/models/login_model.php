@@ -8,8 +8,8 @@ class Login_model extends CI_Model{
 	
 	
 	public function validate(){
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
+		$username =  $this->security->xss_clean($this->input->post('username'));
+		$password =  $this->security->xss_clean($this->input->post('password'));
 		
 		$this->db->where('username', $username);
         $this->db->where('password', md5($password));
