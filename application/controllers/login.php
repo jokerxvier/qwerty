@@ -6,6 +6,7 @@ class Login extends CI_Controller {
 	{
 		$data['main_content'] = 'pages/login_view';
 		$data['alerts'] = $msg;
+		$data['page'] = 'login';
 		$this->load->view('template', $data);
 	}
 	

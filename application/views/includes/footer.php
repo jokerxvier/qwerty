@@ -8,7 +8,9 @@
 
 <script src="<?php echo base_url(); ?>js/signin.js"></script>
 
-
+<?php 
+if ($page != 'login'):
+?>
 <div class="footer">
   <div class="footer-inner">
     <div class="container">
@@ -23,7 +25,7 @@
   <!-- /footer-inner --> 
 </div>
 <!-- /footer --> 
-
+<?php endif; ?>
 
 </body>
 
