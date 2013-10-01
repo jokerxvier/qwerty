@@ -8,6 +8,23 @@
 
 <script src="<?php echo base_url(); ?>js/signin.js"></script>
 
+
+<div class="footer">
+  <div class="footer-inner">
+    <div class="container">
+      <div class="row">
+        <div class="span12"> &copy; 2013 Quezon City Map App Dashboard </div>
+        <!-- /span12 --> 
+      </div>
+      <!-- /row --> 
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /footer-inner --> 
+</div>
+<!-- /footer --> 
+
+
 </body>
 
 </html>
