@@ -2,22 +2,27 @@
 	
 	<div class="content clearfix">
 		
-		<form action="#" method="post">
+		<form action="<?php echo base_url(); ?>login/process" method="post" >
 		
 			<h1>Member Login</h1>		
 			
 			<div class="login-fields">
 				
-				<p>Please provide your details</p>
+				<?php if(!is_null($alerts)){?>
+						<p class="alert alert-warning"><?php echo $alerts ?></p>
+				<?php }else {?>		
+					<p>Please provide your details</p>
+				<?php }?>
+			
 				
 				<div class="field">
 					<label for="admin_username">Username</label>
-					<input type="text" id="admin_username" name="admin_username" value="" placeholder="Username" class="login username-field" />
+					<input type="text" id="admin_username" name="username" value="" placeholder="Username" class="login username-field" />
 				</div> <!-- /field -->
 				
 				<div class="field">
 					<label for="admin_password">Password:</label>
-					<input type="password" id="admin_password" name="admin_password" value="" placeholder="Password" class="login password-field"/>
+					<input type="password" id="admin_password" name="password" value="" placeholder="Password" class="login password-field"/>
 				</div> <!-- /password -->
 				
 			</div> <!-- /login-fields -->
