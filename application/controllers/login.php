@@ -29,7 +29,7 @@ class Login extends CI_Controller {
 				$msg = "Wrong Username and Password";
 				$this->index($msg);
 			}else {
-				echo "success";	
+				redirect('dashboard');
 			}
 		}
 	}

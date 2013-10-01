@@ -9,7 +9,7 @@
 <script src="<?php echo base_url(); ?>js/signin.js"></script>
 
 <?php 
-if ($page != 'login'):
+if (isset($page) AND $page != 'login'):
 ?>
 <div class="footer">
   <div class="footer-inner">
