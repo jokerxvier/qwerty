@@ -11,11 +11,13 @@ class Dashboard extends CI_Controller {
 	{
 		$data['main_content'] = 'pages/dashboard_view';
 		$data['page'] = "dashboard"; 
+		$data['username'] = $this->session->userdata('username') ;
+		$data['isLogin'] = true;
 		$this->load->view('template', $data);
 	}
 	
 	private function check_validated(){
-		 if(! $this->session->userdata('validated')){
+		 if(! $this->session->userdata('isLogin')){
 			redirect('login');
 		 }
 	}

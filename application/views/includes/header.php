@@ -44,21 +44,16 @@
 			<a class="brand" href="index.html">
 				<img src="<?php echo base_url(); ?>img/qc-guide-app.png">			
 			</a>	
-			
+		<?php 
+			if (isset($isLogin)) :
+		?>	
 		<div class="nav-collapse">
 			<ul class="nav pull-right">
+				
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-cog"></i> Account <b class="caret"></b>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="javascript:;">Settings</a></li>
-						<li><a href="javascript:;">Help</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-user"></i> EGrappler.com <b class="caret"></b>
+						<i class="icon-user"><?php  echo $username ?></i> 
+						 <b class="caret"></b>
 					</a>
 				<ul class="dropdown-menu">
 					<li><a href="javascript:;">Profile</a></li>
@@ -71,6 +66,7 @@
 			</form>-->
 		</div>
 		<!--/.nav-collapse --> 
+        <?php endif ?>
     </div>
     <!-- /container --> 
 	

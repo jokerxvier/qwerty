@@ -24,7 +24,7 @@ class Login_model extends CI_Model{
                     'fname' => $row->fname,
                     'lname' => $row->lname,
                     'username' => $row->username,
-                    'validated' => true
+                    'isLogin' => true
                     );
             $this->session->set_userdata($data);
             return true;
