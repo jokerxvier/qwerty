@@ -30,11 +30,13 @@ body{ background: url(../../img/body-bg.png); color:#838383; font: 13px/1.7em 'O
 } 
 
 .login-fields {
+
 	
 }
 
 .login-fields .field {
 	margin-bottom: 1.25em;
+	
 }
 
 .login-fields label {
@@ -42,10 +44,11 @@ body{ background: url(../../img/body-bg.png); color:#838383; font: 13px/1.7em 'O
 }
 
 .login-fields input {
+	height:40px;
 	font-family: 'Open Sans';
 	font-size: 13px;
 	color: #8e8d8d;
-	padding: 16px 20px 20px 50px;
+	padding: 0px 20px 0px 50px;
 	background-color: #fdfdfd;
 	width: 325px;
 	display: block;
