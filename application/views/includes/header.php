@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en" ng-app="app">
 <head>
 	<meta charset="utf-8">
@@ -31,12 +32,9 @@
 </head>
 <body>
 
-<div class="navbar navbar-fixed-top">
-	
-	<div class="navbar-inner">
-		
+<div class="navbar navbar-fixed-top">	
+	<div class="navbar-inner">		
 		<div class="container">
-			
 			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -45,30 +43,37 @@
 			
 			<a class="brand" href="index.html">
 				<img src="<?php echo base_url(); ?>img/qc-guide-app.png">			
-			</a>		
+			</a>	
 			
-			<div class="nav-collapse">
-				<ul class="nav pull-right">
-					
-					<li class="">						
-						<a href="signup.html" class="">
-							<!--Don't have an account?-->
-						</a>
-						
-					</li>
-					
-					<li class="">						
-						<a href="index.html" class="">
-							<!--<i class="icon-chevron-left"></i>
-							Back to Homepage-->
-						</a>
-						
-					</li>
+		<div class="nav-collapse">
+			<ul class="nav pull-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="icon-cog"></i> Account <b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:;">Settings</a></li>
+						<li><a href="javascript:;">Help</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="icon-user"></i> EGrappler.com <b class="caret"></b>
+					</a>
+				<ul class="dropdown-menu">
+					<li><a href="javascript:;">Profile</a></li>
+					<li><a href="javascript:;">Logout</a></li>
 				</ul>
-				
-			</div><!--/.nav-collapse -->	
+				</li>
+			</ul>
+			<!--<form class="navbar-search pull-right">
+				<input type="text" class="search-query" placeholder="Search">
+			</form>-->
+		</div>
+		<!--/.nav-collapse --> 
+    </div>
+    <!-- /container --> 
 	
-		</div> <!-- /container -->
 		
 	</div> <!-- /navbar-inner -->
 	
