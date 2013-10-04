@@ -25,6 +25,19 @@ class Merchant_model extends CI_Model{
 		return false;
 	}
 	
+	public function displayData($id){
+		$this->db->where('merchant_id',$id);
+		$query = $this->db->get("merchant");
+		if($query->num_rows() > 0){
+			foreach($query->result() as $row){
+				$data[] = $row;
+			}
+			return $data;
+		}
+		
+		return false;
+	}
+	
 	
 	
 	

@@ -60,7 +60,7 @@ class Merchant extends CI_Controller {
         $this->pagination->initialize($config);
 		$page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $data["results"] = $this->merchant_model->fetch_merchant($config["per_page"], $page);
-        $data["resultCount"] =  count($data["results"]);
+        $data["resultCount"] =  $this->merchant_model->record_count();
 		if (!is_null($message)){
 			$data['message'] = $message;	
 		}
@@ -87,7 +87,7 @@ class Merchant extends CI_Controller {
 			$mechant_name = (isset($_GET['merchant_name'])) ? $this->security->xss_clean($_GET['merchant_name']) : ''  ;
 			$address = (isset($_GET['address'])) ? $this->security->xss_clean($_GET['address']) : ''  ;
 			$phone = (isset($_GET['phone'])) ? $this->security->xss_clean($_GET['phone']) : ''  ;
-			$city = (isset($_GET['city'])) ? $this->security->xss_clean($_GET['city']) : '' ; 
+			$city = (isset($_GET['person'])) ? $this->security->xss_clean($_GET['person']) : '' ; 
 			$email = (isset($_GET['email'])) ? $this->security->xss_clean($_GET['email']) : ''  ;
 			
 		switch ($action){
@@ -114,9 +114,22 @@ class Merchant extends CI_Controller {
 					$this->db->where('merchant_id', $val);
 					$this->db->delete('merchant');
 				}
-				$message = "You have successfully Deleted an Item";
+		
+				$this->session->set_flashdata("message","<p class=\"alert alert-warning\">You have successfully Deleted an Item</p>");
+				redirect('merchant');
+			break;
+			
+			case "update":
+				$response['merchant'] = array();
+				$arr = array();
+				$merchant_ids = (isset($_GET['merchant_id'])) ? $_GET['merchant_id'] : '';	
+				$data = $this->merchant_model->displayData($merchant_ids);
 				
-				return $this->index($message);
+				array_push($response["merchant"], $data );
+				if(count($data) > 0){
+					$response["success"] = 1;
+					echo json_encode($response);
+				}
 			break;
 			
 			

@@ -11,27 +11,81 @@
 <script src="<?php echo base_url(); ?>js/base.js"></script> 
 <script src="<?php echo base_url(); ?>js/validation.js"></script> 
 <script type="text/javascript">
-	$(function (){
-	 	var formMerchant = $('#merchantform');
-		var merchantName = $('#merchant');
-		var address = $('#address');
-		var phone = $('#phone');
-		var city = $('#city');
-		var email = $('#email');
-		var submitBtn = $('.btn-merchant');
-		var message = $('#message');
+
+$(function (){	
 		
-		$.validator.setDefaults({
-				submitHandler: function() { 
-					$.ajax({
-						url: '<?php echo base_url(); ?>merchant/process',  
-						async: false, 
-						type: 'GET', 
-						dataType: 'json', 
-						data: 'action=insert_merchant&merchant_name='+ merchantName.val()+'&address='+address.val()+'&phone='+phone.val()+'&city='+city.val()+'&email='+email.val(),
-						success: function(result) {
+	 function myJs(){
+			
+		    var Merchant = this;
+
+			var dom = {
+				formMerchant : $('#merchantform'),
+				$fomrMerchantList : $('.form-merchant-list'),
+				merchantName : $('#merchant'),
+				address : $('#address'),
+				phone : $('#phone'),
+				person : $('#person'),
+				email : $('#email'),
+				submitBtn : $('.btn-merchant'),
+				message : $('#message'),
+				btnDelete : $('.btn-delete'),
+				merchantCheckBox: $('.merchantCheckBox'),
+				CheckBox: $('.merchantCheckBox:checked'),
+				warning : $('#message'),
+				editBtn : $('.edit-btn')
+			}
+			
+			
+			Merchant.ajaxFunction  = function (url, params){
+				var data;
+				$.ajax({
+					  url: url,  
+					  async: false, 
+					  type: 'GET', 
+					  dataType: 'json', 
+					  data: params,
+					  success: function(result) {
+						 data  = result;
+					  }
+					  
+					 
+				});
+				
+				 return data ;
+				
+			}
+			
+			Merchant.updateMerchant = function (){
+				var MerchantUrl =  '<?php echo base_url(); ?>merchant/process'; 
+				dom.editBtn.on('click', function(){
+					var txtUser =  $(this).parent().find('.userTxt').val();
+					var params = 'action=update&merchant_id='+ txtUser;
+					var result =  Merchant.ajaxFunction(MerchantUrl, params);
+					console.log(result.merchant[0][0]);
+					if(result.success == 1){
+						dom.phone.val(result.merchant[0][0].contact_number);
+						dom.merchantName.val(result.merchant[0][0].merchant_name);
+						dom.address.val(result.merchant[0][0].merchant_address);
+						dom.person.val(result.merchant[0][0].contact_person);
+						
+						$('#myModal').modal('show');
+					}
+				
+				});
+			}
+
+
+
+			Merchant.addMerchant = function (){
+				$.validator.setDefaults({
+					
+					submitHandler: function() { 
+							var MerchantUrl =  '<?php echo base_url(); ?>merchant/process'; 
+							var params = 'action=insert_merchant&merchant_name='+ dom.merchantName.val()+'&address='+dom.address.val()+'&phone='+dom.phone.val()+'&person='+dom.person.val()+'&email='+dom.email.val();
+							var result =  Merchant.ajaxFunction(MerchantUrl, params);
+							
 							if(result.success == 1){
-								message.html('<p class="alert alert-warning">You have successfuly Added new merchant</p>');
+								dom.message.html('<p class="alert alert-warning">You have successfuly Added new merchant</p>');
 								 setTimeout(function () {
 									$('#myModal').modal('hide');		
 									 location.reload(true);
@@ -43,24 +97,28 @@
 								});
 								
 							}
-						}
-					});
-				}
-		});
+						
+					  }
+				});
+			
+				dom.submitBtn.on('click',function (e){			   
+				  dom.formMerchant.validate();	
+				  dom.formMerchant.submit();
+				  e.preventDefault();		   
+				});	
+			}
+			
+		}//end myJs
+
+			
+		var myJs = new myJs();	
 		
-		
-		
-		submitBtn.on('click',function (e){			   
-			  formMerchant.validate();	
-			  formMerchant.submit();
-			  e.preventDefault();		   
-		})
+		myJs.addMerchant();
+		myJs.updateMerchant();
 
 		
-		
-	});
-		
-	
+});
+
 </script>
 <script>     
 

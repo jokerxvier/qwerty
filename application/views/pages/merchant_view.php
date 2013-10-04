@@ -7,9 +7,7 @@
 
         <div class="btn-group">
 				
-				<?php if(isset($message)){?>
-						<p class="alert alert-warning"><?php echo $message ?></p>
-				<?php }?>
+				<?php echo $this->session->flashdata('message');  ?></p>
                 <!-- Modal -->
                 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-header">
@@ -39,7 +37,7 @@
                                 <label for="email" class="control-label">	
                                     Email
                                 </label>
-                                <div class="controls"><input name="email" placeholder="W 123 Street" type="text" value="" id="email" required></div>
+                                <div class="controls"><input name="email" placeholder="samplerperson@gmail.com" type="text" value="" id="email" required></div>
                             </div>
                  
                             <div class="control-group">
@@ -52,9 +50,9 @@
                  
                             <div class="control-group">
                                 <label for="city" class="control-label">	
-                                    City
+                                    Contact Person
                                 </label>
-                                <div class="controls"><input name="city" type="text" value="" id="city">
+                                <div class="controls"><input name="city" type="text" value="" id="person">
                                 </div>
                             </div>
                             
@@ -72,10 +70,10 @@
                 
         </div>
         
-        <form action="<?php echo base_url() ?>merchant/process" method="get" class="form-horizontal form-merchant" accept-charset="utf-8">
+        <form action="<?php echo base_url() ?>merchant/process" method="get" class="form-horizontal form-merchant-list" accept-charset="utf-8">
                 <div class="btn-group">
                     <a href="#myModal" role="button" class="btn btn-default btn-lg" data-toggle="modal"><span class="glyphicon glyphicon-star"></span>Add New Merchant</a>
-                    <button role="button" class="btn" type="submit">Delete Record</button> 
+                    <button role="button" class="btn btn-delete" type="submit">Delete Record</button> 
                 </div>
                 <input name="action" type="hidden" value="delete" />
                  <table class="table table-striped table-bordered table-merchant">
@@ -91,21 +89,30 @@
                         </thead>
                         <tbody>
                         <?php 
-                        if ($resultCount > 0):
-                            foreach($results as $data){
+				
+                        if (isset($resultCount ) && $resultCount > 0):
+                           	 foreach($results as $data){
                         ?>
-                          <tr>
-                             <td><input name="item[]" type="checkbox" value="<?php echo $data->merchant_id ?>" /> </td>
-                            <td> <?php echo $data->merchant_name ?> </td>
-                            <td> <?php echo $data->merchant_address ?> </td>
-                            <td><?php echo $data->contact_number ?></td>
-                            <td><?php echo $data->contact_person ?></td>
-                             <td class="td-actions"><a href="javascript:;" class="btn btn-small btn-success"><i class="btn-icon-only icon-ok"> </i></a><a href="javascript:;" class="btn btn-danger btn-small"><i class="btn-icon-only icon-remove"> </i></a></td>
-                          </tr>
+                                  <tr>
+                                     <td style="text-align:center"><input name="item[]" type="checkbox" value="<?php echo $data->merchant_id ?>" /> </td>
+                                    <td> <?php echo $data->merchant_name ?> </td>
+                                    <td> <?php echo $data->merchant_address ?> </td>
+                                    <td><?php echo $data->contact_number ?></td>
+                                    <td><?php echo $data->contact_person ?></td>
+                                     <td class="td-actions" align="center">
+                                     <a href="#" class="edit-btn"><img src="<?php echo base_url() ?>img/edit.png" width="30" /></a>
+                                     <input type="hidden" name="user_id" value="<?php echo $data->merchant_id ?>" class="userTxt"  />
+                                     </td>
+                                  </tr>
                           <?php 
-                            }
-                          endif; 
-                          ?>
+                            	}
+							else :
+							?>	
+							<tr>
+                                 <td colspan="6">No Data has been display</td>  
+                             </tr>
+							
+                          <?php endif; ?>
                         
                           
                         

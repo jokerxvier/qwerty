@@ -3,7 +3,7 @@
 		<div class="container">
 			<ul class="mainnav">
 				<li class="active">
-					<a href="index.html"><i class="icon-dashboard"></i><span>Dashboard</span> </a>
+					<a href="<?php echo base_url() ?>dashboard"><i class="icon-dashboard"></i><span>Dashboard</span> </a>
 				</li>
 				<li>
 					<a href="<?php base_url() ?>merchant"><i class="icon-facetime-video"></i><span>Merchants</span> </a>
