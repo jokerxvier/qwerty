@@ -26,6 +26,9 @@ class Merchant_model extends CI_Model{
 	}
 	
 	
+	
+	
+	
 		
 }
 

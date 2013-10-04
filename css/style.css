@@ -1246,6 +1246,9 @@ color: #333;
   font-size: 18px;
 }
 
+.btn-group { margin-bottom:10px; overflow:hidden}
+.btn-group a { margin-right:10px;}
+
 /*------------------------------------------------------------------
 [1. Max Width: 480px]
 */

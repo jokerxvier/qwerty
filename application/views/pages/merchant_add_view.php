@@ -8,13 +8,13 @@
             <div class="pricing-table">
             	<div class="span4 plan">
                    	<h3>Add New Merchant</h3>
-                    <form action="" method="post" class="form-horizontal" id="billingform" accept-charset="utf-8">
+                    <form action="" method="post" class="form-horizontal" id="merchantform" accept-charset="utf-8">
                             <div class="control-group">
                                 <label for="email" class="control-label">	
                                    Merchant Name
                                 </label>
                                 <div class="controls">
-                                    <input name="email" type="email" value="" id="email">
+                                    <input name="email" type="email" value="" id="email" required />
                                 </div>
                             </div>
                  

@@ -1,28 +1,4 @@
- <!-- -->
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
- <!--  -->
 
-<script src="<?php echo base_url(); ?>js/signin.js"></script>
-
-<?php 
-if (isset($page) AND $page != 'login'):
-?>
-<div class="footer">
-  <div class="footer-inner">
-    <div class="container">
-      <div class="row">
-        <div class="span12"> &copy; 2013 Quezon City Map App Dashboard </div>
-        <!-- /span12 --> 
-      </div>
-      <!-- /row --> 
-    </div>
-    <!-- /container --> 
-  </div>
-  <!-- /footer-inner --> 
-</div>
-<!-- /footer --> 
-<?php endif; ?>
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
@@ -31,8 +7,61 @@ if (isset($page) AND $page != 'login'):
 <script src="<?php echo base_url(); ?>js/chart.min.js" type="text/javascript"></script> 
 <script src="<?php echo base_url(); ?>js/bootstrap.js"></script>
 <script language="javascript" type="text/javascript" src="<?php echo base_url(); ?>js/full-calendar/fullcalendar.min.js"></script>
- 
+<script src="<?php echo base_url(); ?>js/signin.js"></script>
 <script src="<?php echo base_url(); ?>js/base.js"></script> 
+<script src="<?php echo base_url(); ?>js/validation.js"></script> 
+<script type="text/javascript">
+	$(function (){
+	 	var formMerchant = $('#merchantform');
+		var merchantName = $('#merchant');
+		var address = $('#address');
+		var phone = $('#phone');
+		var city = $('#city');
+		var email = $('#email');
+		var submitBtn = $('.btn-merchant');
+		var message = $('#message');
+		
+		$.validator.setDefaults({
+				submitHandler: function() { 
+					$.ajax({
+						url: '<?php echo base_url(); ?>merchant/process',  
+						async: false, 
+						type: 'GET', 
+						dataType: 'json', 
+						data: 'action=insert_merchant&merchant_name='+ merchantName.val()+'&address='+address.val()+'&phone='+phone.val()+'&city='+city.val()+'&email='+email.val(),
+						success: function(result) {
+							if(result.success == 1){
+								message.html('<p class="alert alert-warning">You have successfuly Added new merchant</p>');
+								 setTimeout(function () {
+									$('#myModal').modal('hide');		
+									 location.reload(true);
+								}, 1000);
+								
+								
+								$('#myModal').on('hidden.bs.modal', function () {
+									location.reload(true);
+								});
+								
+							}
+						}
+					});
+				}
+		});
+		
+		
+		
+		submitBtn.on('click',function (e){			   
+			  formMerchant.validate();	
+			  formMerchant.submit();
+			  e.preventDefault();		   
+		})
+
+		
+		
+	});
+		
+	
+</script>
 <script>     
 
         var lineChartData = {
