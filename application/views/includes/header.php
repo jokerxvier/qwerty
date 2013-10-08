@@ -52,7 +52,7 @@
 					
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<i class="icon-user"></i> <span> <?php  echo $username ?> </span>  
+							<i class="icon-user"> </i> &nbsp; <span> <?php  echo $username ?> </span>  
 							 <b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">

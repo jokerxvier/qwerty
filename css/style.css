@@ -84,8 +84,12 @@ textarea {
 }
 
 .navbar .nav a {
-	font-size: 12px;
+	font-size: 13px;
 	text-transform: capitalize;
+}
+.navbar .nav span {
+	color:#FFF;
+	
 }
 .navbar .nav>li>a { color:#000 !important;}
 .navbar .brand {
