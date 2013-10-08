@@ -44,30 +44,30 @@
 			<a class="brand" href="index.html">
 				<img src="<?php echo base_url(); ?>img/qc-guide-app.png">			
 			</a>	
-		<?php 
-			if (isset($isLogin)) :
-		?>	
-		<div class="nav-collapse">
-			<ul class="nav pull-right">
-				
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="icon-user"><?php  echo $username ?></i> 
-						 <b class="caret"></b>
-					</a>
-				<ul class="dropdown-menu">
-					<li><a href="javascript:;">Profile</a></li>
-					<li><a href="javascript:;">Logout</a></li>
+			<?php 
+				if (isset($isLogin)) :
+			?>	
+			<div class="nav-collapse">
+				<ul class="nav pull-right">
+					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="icon-user"></i> <span> <?php  echo $username ?> </span>  
+							 <b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="javascript:;">Profile</a></li>
+							<li><a href="javascript:;">Logout</a></li>
+						</ul>
+					</li>
 				</ul>
-				</li>
-			</ul>
-			<!--<form class="navbar-search pull-right">
-				<input type="text" class="search-query" placeholder="Search">
-			</form>-->
+				<!--<form class="navbar-search pull-right">
+					<input type="text" class="search-query" placeholder="Search">
+				</form>-->
+			</div>
+			<!--/.nav-collapse --> 
+			<?php endif ?>
 		</div>
-		<!--/.nav-collapse --> 
-        <?php endif ?>
-    </div>
     <!-- /container --> 
 	
 		
