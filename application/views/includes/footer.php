@@ -2,19 +2,19 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="<?php echo base_url(); ?>js/jquery-1.7.2.min.js"></script> 
-<script src="<?php echo base_url(); ?>js/excanvas.min.js"></script> 
-<script src="<?php echo base_url(); ?>js/chart.min.js" type="text/javascript"></script> 
-<script src="<?php echo base_url(); ?>js/bootstrap.js"></script>
-<script language="javascript" type="text/javascript" src="<?php echo base_url(); ?>js/full-calendar/fullcalendar.min.js"></script>
-<script src="<?php echo base_url(); ?>js/signin.js"></script>
-<script src="<?php echo base_url(); ?>js/base.js"></script> 
-<script src="<?php echo base_url(); ?>js/validation.js"></script> 
+<script src="<?php echo base_url(); ?>assets/js/jquery-1.7.2.min.js"></script> 
+<script src="<?php echo base_url(); ?>assets/js/excanvas.min.js"></script> 
+<script src="<?php echo base_url(); ?>assets/js/chart.min.js" type="text/javascript"></script> 
+<script src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/full-calendar/fullcalendar.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/signin.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/base.js"></script> 
+<script src="<?php echo base_url(); ?>assets/js/validation.js"></script> 
 <script type="text/javascript">
 
 $(function (){	
 		
-	 function myJs(){
+	function myJs(){
 			
 		    var Merchant = this;
 
@@ -33,6 +33,18 @@ $(function (){
 				CheckBox: $('.merchantCheckBox:checked'),
 				warning : $('#message'),
 				editBtn : $('.edit-btn')
+			}
+			
+			Merchant.changeHtmlFormat = function(action){
+				if (action === 'update'){
+					$('#myModalLabel').html('Update Record');
+					$('.btn-merchant').html('Update Info');
+					$('.btn-merchant').addClass('update-btn');
+				}else if(action === 'insert') {
+					$('.form-merchant input[type="text"]').val('');
+					$('#myModalLabel').html('Add Merchant');
+				}
+				
 			}
 			
 			
@@ -59,16 +71,37 @@ $(function (){
 				var MerchantUrl =  '<?php echo base_url(); ?>merchant/process'; 
 				dom.editBtn.on('click', function(){
 					var txtUser =  $(this).parent().find('.userTxt').val();
-					var params = 'action=update&merchant_id='+ txtUser;
+					var params = 'action=update_list&merchant_id='+ txtUser;
 					var result =  Merchant.ajaxFunction(MerchantUrl, params);
-					console.log(result.merchant[0][0]);
 					if(result.success == 1){
 						dom.phone.val(result.merchant[0][0].contact_number);
 						dom.merchantName.val(result.merchant[0][0].merchant_name);
 						dom.address.val(result.merchant[0][0].merchant_address);
 						dom.person.val(result.merchant[0][0].contact_person);
-						
+						var action = "update";
+						Merchant.changeHtmlFormat(action);
 						$('#myModal').modal('show');
+						
+						$('.update-btn').on('click', function (){
+						
+							var params2 = 'action=updatedata&merchant_name='+ dom.merchantName.val()+'&address='+dom.address.val()+'&phone='+dom.phone.val()+'&person='+dom.person.val()+'&email='+dom.email.val()+'&merchant_id='+ txtUser;
+							var result2 =  Merchant.ajaxFunction(MerchantUrl, params2);
+							if(result2.success == 1){
+									dom.message.html('<p class="alert alert-warning">You have successfuly Added new merchant</p>');
+									 setTimeout(function () {
+										$('#myModal').modal('hide');		
+										 location.reload(true);
+									}, 1000);
+									
+									$('#myModal').on('hidden.bs.modal', function () {
+										location.reload(true);
+									});
+									
+							}						   
+						});
+						
+						
+						
 					}
 				
 				});
@@ -77,35 +110,42 @@ $(function (){
 
 
 			Merchant.addMerchant = function (){
-				$.validator.setDefaults({
+				$('.btn-addMerchant').on('click',function (){
+						var action = "insert";
+						Merchant.changeHtmlFormat(action);								   
+						$('#myModal').modal('show');								   
+						$.validator.setDefaults({
 					
-					submitHandler: function() { 
-							var MerchantUrl =  '<?php echo base_url(); ?>merchant/process'; 
-							var params = 'action=insert_merchant&merchant_name='+ dom.merchantName.val()+'&address='+dom.address.val()+'&phone='+dom.phone.val()+'&person='+dom.person.val()+'&email='+dom.email.val();
-							var result =  Merchant.ajaxFunction(MerchantUrl, params);
+						submitHandler: function() { 
+								var MerchantUrl =  '<?php echo base_url(); ?>merchant/process'; 
+								var params = 'action=insert_merchant&merchant_name='+ dom.merchantName.val()+'&address='+dom.address.val()+'&phone='+dom.phone.val()+'&person='+dom.person.val()+'&email='+dom.email.val();
+								var result =  Merchant.ajaxFunction(MerchantUrl, params);
+								
+								if(result.success == 1){
+									dom.message.html('<p class="alert alert-warning">You have successfuly Added new merchant</p>');
+									 setTimeout(function () {
+										$('#myModal').modal('hide');		
+										 location.reload(true);
+									}, 1000);
+									
+									$('#myModal').on('hidden.bs.modal', function () {
+										location.reload(true);
+									});
+									
+								}
 							
-							if(result.success == 1){
-								dom.message.html('<p class="alert alert-warning">You have successfuly Added new merchant</p>');
-								 setTimeout(function () {
-									$('#myModal').modal('hide');		
-									 location.reload(true);
-								}, 1000);
-								
-								
-								$('#myModal').on('hidden.bs.modal', function () {
-									location.reload(true);
-								});
-								
-							}
-						
-					  }
-				});
+						  }
+					});
 			
-				dom.submitBtn.on('click',function (e){			   
-				  dom.formMerchant.validate();	
-				  dom.formMerchant.submit();
-				  e.preventDefault();		   
-				});	
+					dom.submitBtn.on('click',function (e){			   
+					  dom.formMerchant.validate();	
+					  dom.formMerchant.submit();
+					  e.preventDefault();		   
+					});		
+					
+				});
+				
+				
 			}
 			
 		}//end myJs
@@ -115,6 +155,15 @@ $(function (){
 		
 		myJs.addMerchant();
 		myJs.updateMerchant();
+		
+		$('#phone').on('keyup', function (e){
+			if ((e.keyCode > 47 && e.keyCode <58) || (e.keyCode < 106 && e.keyCode > 95))
+				{
+					this.value = this.value.replace(/(\d{3})\-?/g,'$1-');
+					return true;
+				}
+   				 this.value = this.value.replace(/[^\-0-9]/g,'');
+		});
 
 		
 });

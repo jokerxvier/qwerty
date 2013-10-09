@@ -87,39 +87,49 @@ class Merchant extends CI_Controller {
 			$mechant_name = (isset($_GET['merchant_name'])) ? $this->security->xss_clean($_GET['merchant_name']) : ''  ;
 			$address = (isset($_GET['address'])) ? $this->security->xss_clean($_GET['address']) : ''  ;
 			$phone = (isset($_GET['phone'])) ? $this->security->xss_clean($_GET['phone']) : ''  ;
-			$city = (isset($_GET['person'])) ? $this->security->xss_clean($_GET['person']) : '' ; 
+			$person = (isset($_GET['person'])) ? $this->security->xss_clean($_GET['person']) : '' ; 
 			$email = (isset($_GET['email'])) ? $this->security->xss_clean($_GET['email']) : ''  ;
+			$merchant_id = (isset($_GET['merchant_id'])) ? $this->security->xss_clean($_GET['merchant_id']) : ''  ;
+			
 			
 		switch ($action){
 			case "insert_merchant":	
+			
 				$data = array(
 				   'merchant_name' => $mechant_name,
 				   'merchant_address' => $address,
 				   'contact_number' => $phone ,
-				   'contact_person' => $city ,
+				   'contact_person' => $person ,
 				   'email' => $email,
 				   'date_inserted' =>  $date,
 				);
 				$response['merchant'] = array();
 				array_push($response["merchant"], $data);
-	
-				$this->db->insert('merchant', $data);
+				$this->merchant_model->insertData($data);
 				$response["success"] = 1;
 				echo json_encode($response);
 			break;
 			
 			case "delete":
+				
 				$merchant_ids = (isset($_GET['item'])) ? $_GET['item'] : '';
-				foreach ($merchant_ids as $key=>$val){
-					$this->db->where('merchant_id', $val);
-					$this->db->delete('merchant');
+				if (count($merchant_ids) > 0 &&  $merchant_ids ){
+					foreach ($merchant_ids as $key=>$val){
+						$this->db->where('merchant_id', $val);
+						$this->db->delete('merchant');
+						
+					}
+					$message = "<p class=\"alert alert-warning\">You have successfully Deleted an Item</p>";
+				}else {
+					$message = "<p class=\"alert alert-warning\">Select one or more Item to Delete</p>";
 				}
+				
 		
-				$this->session->set_flashdata("message","<p class=\"alert alert-warning\">You have successfully Deleted an Item</p>");
+				$this->session->set_flashdata("message", $message);
 				redirect('merchant');
 			break;
 			
-			case "update":
+			case "update_list":
 				$response['merchant'] = array();
 				$arr = array();
 				$merchant_ids = (isset($_GET['merchant_id'])) ? $_GET['merchant_id'] : '';	
@@ -130,6 +140,25 @@ class Merchant extends CI_Controller {
 					$response["success"] = 1;
 					echo json_encode($response);
 				}
+			break;
+			
+			case "updatedata":
+				$data = array(
+				   'merchant_name' => $mechant_name,
+				   'merchant_address' => $address,
+				   'contact_number' => $phone ,
+				   'contact_person' => $person ,
+				   'email' => $email,
+				   'date_inserted' =>  $date,
+				);
+				$response['merchant'] = array();
+				array_push($response["merchant"], $merchant_id);
+	
+				$this->db->where('merchant_id', $merchant_id);
+				$this->db->update('merchant', $data); 
+
+				$response["success"] = 1;
+				echo json_encode($response);
 			break;
 			
 			

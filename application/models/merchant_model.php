@@ -13,6 +13,7 @@ class Merchant_model extends CI_Model{
 	}
 	
 	public function fetch_merchant($limit, $start){
+		$this->db->order_by("date_inserted", "desc"); 
 		$this->db->limit($limit, $start);
 		$query = $this->db->get("merchant");
 		if($query->num_rows() > 0){
@@ -36,6 +37,12 @@ class Merchant_model extends CI_Model{
 		}
 		
 		return false;
+	}
+	
+	public function insertData($data){
+		$insert =  $this->db->insert('merchant', $data);
+		return $insert;
+	
 	}
 	
 	

@@ -1,20 +1,26 @@
+<?php 
+	$nav = array();
+	$nav = array(
+		array('title' => 'Dashborad', 'icon' => 'icon-dashboard', 'page' => 'dashboard'),
+		array('title' => 'Merchant', 'icon' => 'icon-facetime-video', 'page' => 'merchant'),
+		array('title' => 'Promotion', 'icon' => 'icon-bar-chart', 'page' => 'promotion'),
+		array('title' => 'Reports', 'icon' => 'icon-list-alt', 'page' => 'reports')
+	);
+
+?>
 <div class="subnavbar">
 	<div class="subnavbar-inner">
 		<div class="container">
 			<ul class="mainnav">
-				<li class="active">
-					<a href="<?php echo base_url() ?>dashboard"><i class="icon-dashboard"></i><span>Dashboard</span> </a>
+            	<?php 
+				 foreach ($nav as $key => $val):
+				?>
+				<li <?php echo ($this->uri->uri_string() == $val['page']) ?  'class="active"' : '' ?>>
+					<a href="<?php echo base_url().$val['page'] ?>"><i class="<?php echo $val['icon'] ?>"></i><span><?php echo $val['title']; ?></span> </a>
 				</li>
-				<li>
-					<a href="<?php base_url() ?>merchant"><i class="icon-facetime-video"></i><span>Merchants</span> </a>
-				</li>
-				<li>
-					<a href="<?php base_url() ?>promotion"><i class="icon-bar-chart"></i><span>Promotions</span> </a>
-				</li>
-				<li>
-					<a href="reports.html"><i class="icon-list-alt"></i><span>Reports</span> </a>
-				</li>
-				<li>
+                
+               <?php endforeach; ?> 
+				
 			
 			</ul>
 		</div>
