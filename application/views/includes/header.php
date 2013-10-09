@@ -7,20 +7,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes"> 
     
-	<link href="<?php echo base_url(); ?>css/bootstrap.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>css/font-awesome.css" rel="stylesheet">
+	<link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/css/font-awesome.css" rel="stylesheet">
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
 		
-	<link href="<?php echo base_url(); ?>css/style.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet" type="text/css">
 	
 	<!-- sign in / log in CSS-->
-	<link href="<?php echo base_url(); ?>css/pages/signin.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo base_url(); ?>assets/css/pages/signin.css" rel="stylesheet" type="text/css">
 	<!--/sign in or log in CSS-->
 	
 	<!-- dashboard CSS-->
-	<link href="<?php echo base_url(); ?>css/pages/dashboard.css" rel="stylesheet">
+	<link href="<?php echo base_url(); ?>assets/css/pages/dashboard.css" rel="stylesheet">
 	<!-- /dashboard CSS-->
 	
 	<!--Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -42,7 +42,7 @@
 			</a>
 			
 			<a class="brand" href="index.html">
-				<img src="<?php echo base_url(); ?>img/qc-guide-app.png">			
+				<img src="<?php echo base_url(); ?>assets/img/qc-guide-app.png">			
 			</a>	
 			<?php 
 				if (isset($isLogin)) :
