@@ -1,9 +1,4 @@
 
-<?php $this->load->view('includes/subnavbar');?>
-
-<div class="main">
-  <div class="main-inner">
-    <div class="container">
       <div class="row">
         <div class="span6">
           <div class="widget widget-nopad">
@@ -120,11 +115,7 @@
         <!-- /span6 --> 
       </div>
       <!-- /row --> 
-    </div>
-    <!-- /container --> 
-  </div>
-  <!-- /main-inner --> 
-</div>
+
 
 
 

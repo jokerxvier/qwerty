@@ -16,7 +16,8 @@ class Merchant extends CI_Controller {
 	public function index($message = NULL)
 	{
 		$data['main_content'] = 'pages/merchant_view';
-		$data['page'] = "merchant"; 
+		$data['page'] = "merchant";
+		$data['js'] = base_url()."assets/js/merchant.js";
 		$data['username'] = $this->session->userdata('username') ;
 		$data['isLogin'] = true;
 		

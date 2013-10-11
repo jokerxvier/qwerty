@@ -1257,7 +1257,8 @@ color: #333;
 .edit-btn { cursor:pointer}
 label.error {color: red;font-size: 12px; padding:5px 0px; margin:0px}
 h3.merchant-head { margin:0pt; padding:0pt}
-
+.preloader { background: url('../img/ajax-loader.gif') no-repeat;  width:128px; height: 15px; float: left;
+margin-top: 10px;}
 /*------------------------------------------------------------------
 [1. Max Width: 480px]
 */
@@ -1271,7 +1272,9 @@ h3.merchant-head { margin:0pt; padding:0pt}
 }
 
 
-
+.control-top { width:205px; }
+.control-top .dropdown-toggle { margin:0pt}
+h3.merchant-head {}
 
 
 /*------------------------------------------------------------------

@@ -30,7 +30,8 @@
 	
 
 </head>
-<body>
+<?php $body = (isset($page)) ? $page : 'home'; ?>
+<body class="<?php echo $body ?>">
 
 <div class="navbar navbar-fixed-top">	
 	<div class="navbar-inner">		
