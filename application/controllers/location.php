@@ -36,12 +36,30 @@ class Location extends CI_Controller {
 		$postal = (isset($_GET['postal'])) ? $_GET['postal'] : '';
 		$lat = (isset($_GET['lat'])) ? $_GET['lat'] : '';
 		$lng = (isset($_GET['lng'])) ? $_GET['lng'] : '';
+		$date = date('Y-m-d H:i:s');
 		
 		
 		switch($action){
 			case "add":
-			
-			echo json_encode('success');
+			$response = array();
+			$data = array(
+					   array(
+						  'Title' => $loc_name ,
+						  'description' => '',
+						  'lat' => $lat,
+						  'long' => $lng,
+						  'house_number' => $house ,
+						  'street_name' => $street,
+						  'barangay' => $brgy ,
+						  'postal_code' => $postal,
+						  'created_at' => $date,
+					   )
+  			 );
+
+			$this->db->insert_batch('location', $data); 
+			$response["success"] = 1;
+			echo json_encode($response);
+
 			
 			break;
 		}

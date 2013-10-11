@@ -103,23 +103,41 @@ var locationJS = (function (parent, $) {
 					  dataType: 'json',
 					  data: {
 						  'action': 'add',
-						  'loc_name' : location.val(),
-						  'house' : house.val(),
-						  'street' : street.val(),
-						  'brgy' : brgy.val(),
-						  'postal' : postal.val(),
-						  'lat' : lat,
-						  'lng' : lng
+						  'loc_name' : _encodeUrl(location.val()),
+						  'house' : _encodeUrl(house.val()),
+						  'street' :_encodeUrl(street.val()),
+						  'brgy' : _encodeUrl(brgy.val()),
+						  'postal' : _encodeUrl(postal.val()),
+						  'lat' : _encodeUrl(lat),
+						  'lng' : _encodeUrl(lng)
 
 					  },
 					  success: function (data) {
-						  console.log(data);
+						  if (data.success == 1){
+
+									
+									$('#message').html('<p class="alert alert-warning">You have successfuly Added new merchant</p>');
+									 setTimeout(function () {
+										$('#myModal').modal('hide');	
+										$('#myModal').data('modal', null);	
+										 window.location.reload(true);
+									}, 1000);
+							
+								  console.log(data.success);
+						  }
+						  
+						
 						  
 					  }
 				});
 				
 			
 				 
+			}
+			
+			
+			_encodeUrl = Location._encodeUrl = Location._encodeUrl || function (data){
+				return encodeURIComponent(data);
 			}
 			
 			_googleMap = Location._googleMap = Location._googleMap || function (lat,lng){
