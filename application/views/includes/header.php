@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
-<head>
+<html lang="en" ng-app="app"><head>
 	<meta charset="utf-8">
     <title>Administrator | Login</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes"> 
-    
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/bootstrap-select.css">
 	<link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url(); ?>assets/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+
+
 	<link href="<?php echo base_url(); ?>assets/css/font-awesome.css" rel="stylesheet">
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
 		

@@ -5,48 +5,41 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery-1.7.2.min.js"></script> 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="<?php echo base_url(); ?>assets/js/excanvas.min.js"></script> 
-<script src="<?php echo base_url(); ?>assets/js/chart.min.js" type="text/javascript"></script> 
+<script src="<?php echo base_url(); ?>assets/js/chart.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/bootstrap-select.js"></script> 
 <script src="<?php echo base_url(); ?>assets/js/bootstrap.js"></script>
 <script language="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/full-calendar/fullcalendar.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/signin.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/base.js"></script> 
 <script src="<?php echo base_url(); ?>assets/js/validation.js"></script> 
+
 <?php if (isset($js)) { ?>
 <script src="<?php echo $js ?>"></script> 
 <?php } ?>
 <script type="text/javascript">
 
 $(function (){	
-	var page = "<?php echo $page ?>";
-	var url = "<?php echo base_url(); ?>";		
-	switch (page) {
-		case "merchant" : 
-			merchantJS.addMerchant(url);
-			merchantJS.updateMerchant(url);
-		break;
+		var page = "<?php echo $page ?>";
+		var url = "<?php echo base_url(); ?>";		
+		switch (page) {
+			case "merchant" : 
+				merchantJS.addMerchant(url);
+				merchantJS.updateMerchant(url);
+			break;
+			
+			case "location":
+				locationJS.addLocation(url);
+			
+			break;
+			
+			
+			
+		}
 		
-		case "location":
-			locationJS.addLocation(url);
-		
-		break;
-		
-		
-		
-	}
-		
-		
-		
-		
-		
-		
-		$('#phone').on('keyup', function (e){
-			if ((e.keyCode > 47 && e.keyCode <58) || (e.keyCode < 106 && e.keyCode > 95))
-				{
-					this.value = this.value.replace(/(\d{3})\-?/g,'$1-');
-					return true;
-				}
-   				 this.value = this.value.replace(/[^\-0-9]/g,'');
-		});
+
+		 $('.selectpicker').selectpicker({
+         
+         });
 
 		
 });

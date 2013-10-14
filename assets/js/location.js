@@ -22,22 +22,31 @@ var locationJS = (function (parent, $) {
 
 				addBtn.on('click',function (){
 						
-						var action = "insert";						   
-						$('#myModal').modal('show');
-						mapView.hide();
-						$('.btn-merchant').on('click', function (e){
-							
-
-							if ($('.form-merchant').valid()){
-									_nextPage(url);	
-								
-							}
-					
+							var action = "insert";						   
+							$('#myModal').modal('show');
+							mapView.hide();
 						
-							 e.preventDefault();	
+							
+							$('.form-merchant-modal').validate({
+								rules: {
+									location: "required",
+									category: "required",
+									
 								
-						});	
+								},
+								
+								submitHandler: function(form) {
+									_nextPage(url);	
+								}
+							});
+
+							// e.preventDefault();	
+								
+					
 				});
+				
+				
+				
 
 			}
 			
@@ -58,14 +67,19 @@ var locationJS = (function (parent, $) {
 								$('.btn-map').show();
 								$('.btn-merchant').hide();
 								
-								 $('.loader').removeClass('preloader');	
+								var ajaxUrl = url + 'location/process';
+								var params = {
+										'action': 'icon',
+										'cat_id' : $('.category').val(),
+								}
+								var icon = _ajaxData(ajaxUrl, params);
+								
+								
 								var coordLat = data.results[0].geometry.location.lat;	
 								var coordLng = data.results[0].geometry.location.lng;
 								lat.val(coordLat);
 								lng.val(coordLng);
-								_googleMap(coordLat, coordLng);
-								$('.loader').removeClass('preloader');
-								
+								_googleMap(coordLat, coordLng, url, icon);
 								$('.btn-merchant').html('Insert');
 								$('.btn-merchant').addClass('btn-add');
 								
@@ -79,6 +93,9 @@ var locationJS = (function (parent, $) {
 									
 								});
 								
+									
+									
+
 													
 						  }else {
 							  console.log('failed');
@@ -95,6 +112,32 @@ var locationJS = (function (parent, $) {
 			}
 			
 			
+			
+			_ajaxData = Location._ajaxData= Location._ajaxData || function (ajaxUrl, params){
+					var data;
+					$.ajax({
+					  url: ajaxUrl,
+					  async: false, 
+					  dataType: 'json',
+					  data: params,
+					  success: function (result) {
+						 if(result.success === 1 && result.icon.length > 0){
+							$('.loader').removeClass('preloader');
+							data = result.icon[0];							 
+						 }
+
+						  
+					  } //end success
+					  
+					
+				});
+				
+				
+				return data;
+				
+				
+			}
+			
 			_insertData = Location._insertData = Location._insertData || function (lat, lng, url){
 				
 				
@@ -108,6 +151,7 @@ var locationJS = (function (parent, $) {
 						  'street' :_encodeUrl(street.val()),
 						  'brgy' : _encodeUrl(brgy.val()),
 						  'postal' : _encodeUrl(postal.val()),
+						  'cat' : _encodeUrl($('.category').val()),
 						  'lat' : _encodeUrl(lat),
 						  'lng' : _encodeUrl(lng)
 
@@ -140,7 +184,9 @@ var locationJS = (function (parent, $) {
 				return encodeURIComponent(data);
 			}
 			
-			_googleMap = Location._googleMap = Location._googleMap || function (lat,lng){
+			_googleMap = Location._googleMap = Location._googleMap || function (lat,lng, url, icon){
+				
+			
 				var myLatlng = new google.maps.LatLng(lat,lng);
 			    var mapOptions = {
 					zoom: 18,
@@ -149,10 +195,12 @@ var locationJS = (function (parent, $) {
 				  }
 				 
 				 var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-				  
+				 var google_image = url + 'assets/' +icon;
+
 				  var marker = new google.maps.Marker({
 					  position: myLatlng,
-					  map: map
+					  map: map,
+					  icon: google_image
 				  });
 				  
 				  var infowindow = new google.maps.InfoWindow();

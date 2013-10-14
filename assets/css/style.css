@@ -1072,7 +1072,7 @@ table.fc-border-separate {
 	filter: alpha(opacity=30)
 }
 .fc .ui-draggable-dragging .fc-event-bg, .fc-select-helper .fc-event-bg {
-	display: none\9
+	display: none
 }
 .fc-event-vert .ui-resizable-s {
 	bottom: 0 !important;

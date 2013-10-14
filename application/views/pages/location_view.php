@@ -5,7 +5,7 @@
 
 		<div class="row show-grid">
 				<div class="span6 pull-left" data-original-title="" title="">
-                  <h3 class="merchant-head">Merchants</h3> 
+                  <h3 class="merchant-head">Location</h3> 
                 </div>
                 <div class="span3 pull-right control-top" data-original-title="" title="">
                   <span class="btn-group pull-left">
@@ -20,7 +20,7 @@
          </div>
 		
 			   
-		
+
 		 <table class="table table-striped table-bordered table-merchant">
 				<thead>
 				  <tr>
@@ -28,30 +28,38 @@
 					<th> Title </th>
 					<th> Short Desc </th>
 					<th> Coordinates  </th>
-					<th> Icon </th>
 					<th> Category </th>
+					<th>  Icon</th>
 					<th class="td-actions"> </th>
 				  </tr>
 				</thead>
 				<tbody>
+                
+					<?php 
+                     if (isset($resultCount ) && $resultCount > 0):
+					 	foreach($results as $data){
+							$icon = ($data->icon != '') ?  '<img src="'.base_url().'/assets/'. $data->icon.'" />' : "No Icon" ; 
+                    ?>
 
 						  <tr>
 							 <td style="text-align:center"></td>
-							<td></td>
-							<td> </td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td><?php echo $data->Title ?></td>
+							<td><?php echo $data->Description ?> </td>
+							<td><?php echo $data->lat ?> , <?php echo $data->long ?></td>
+							<td><?php echo ucfirst($data->cat_name) ?></td>
+							<td align="center"><?php echo $icon ?></td>
 							 <td class="td-actions" align="center" width="95px">
 						
 							 <button class="btn btn-info edit-btn" data-toggle="dropdown"> <i class="icon-pencil"></i> Update</button>
 							 <input type="hidden" name="user_id" value="" class="userTxt"  />
 							 </td>
 						  </tr>
-
+			 		 <?php } endif ?>
 				
 				</tbody>
 			  </table>
+              
+              <?php  echo $links; ?> 
 
   </form>    
 
