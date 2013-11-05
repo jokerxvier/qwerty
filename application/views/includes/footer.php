@@ -11,6 +11,7 @@
 <script language="javascript" type="text/javascript" src="<?php echo base_url(); ?>assets/js/full-calendar/fullcalendar.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/signin.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/base.js"></script> 
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/ajaxupload.3.5.js" ></script>
 <script src="<?php echo base_url(); ?>assets/js/validation.js"></script> 
 
 <?php if (isset($js)) { ?>
@@ -28,7 +29,13 @@ $(function (){
 			break;
 			
 			case "location":
+
 				locationJS.addLocation(url);
+				locationJS.viewMap(url);
+				locationJS.uploadFile(url);
+				locationJS.deletePic(url);
+				locationJS.displayMap(url);
+				
 			
 			break;
 			
@@ -40,6 +47,8 @@ $(function (){
 		 $('.selectpicker').selectpicker({
          
          });
+		 
+		
 
 		
 });

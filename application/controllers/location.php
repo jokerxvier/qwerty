@@ -73,6 +73,16 @@ class Location extends CI_Controller {
 		$this->load->view('template', $data);
 	}
 	
+	public function addlocation(){
+		$user_id =  ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+		$data['main_content'] = 'pages/location_add_view';
+		$data['page'] = "location";
+		$data['js'] = base_url()."assets/js/location.js";
+		$data['user_id'] = $user_id;
+		$data['result'] = $this->location_model->displayEditData($user_id);
+		$this->load->view('template', $data);
+	}
+	
 	
 	public function process(){
 		$action = (isset($_GET['action'])) ? $_GET['action'] : '';
@@ -112,9 +122,27 @@ class Location extends CI_Controller {
 			
 			break;
 			
-			case "icon" : 
+			case "delete" :
 				
-
+				$merchant_ids = (isset($_GET['item'])) ? $_GET['item'] : '';
+				if (count($merchant_ids) > 0 &&  $merchant_ids ){
+					foreach ($merchant_ids as $key=>$val){
+						$this->db->where('id', $val);
+						$this->db->delete('location');
+						
+					}
+					$message = "<p class=\"alert alert-warning\">You have successfully Deleted an Item</p>";
+				}else {
+					$message = "<p class=\"alert alert-warning\">Select one or more Item to Delete</p>";
+				}
+				
+		
+				$this->session->set_flashdata("message", $message);
+				redirect('location');
+			
+			break;
+			
+			case "icon" : 
 				$icon = (isset($_GET['icon'])) ? $_GET['icon'] : '';
 				$cat_id = (isset($_GET['cat_id'])) ? $_GET['cat_id'] : '';
 				$cat = $this->location_model->get_recordsById($cat_id, 'loc_category');
@@ -126,6 +154,105 @@ class Location extends CI_Controller {
 			
 			break;
 			
+			
+			case "searchmap" : 
+				$result = $this->location_model->get_AllRecordsByCat();
+				
+				echo json_encode($result);
+				
+			break;
+			
+			case "uploadpic":
+					$config['upload_path'] = './uploads/'; 
+					$file = $config['upload_path'] . $_FILES['uploadfile']['name']; 
+					
+					
+					if (move_uploaded_file($_FILES['uploadfile']['tmp_name'], $file)) { 
+							$config['image_library'] = 'gd2';
+							$config['source_image']	= $file;
+							$config['allowed_types'] = 'jpg|png|jpeg|gif';
+							$config['create_thumb'] = TRUE;
+							$config['maintain_ratio'] = TRUE;
+							$config['width']	 = 200;
+							$config['height']	= 200;
+							
+							
+							$this->load->library('image_lib', $config); 
+							$this->image_lib->resize();
+								 
+							 echo "success";
+							
+						} else {
+								echo "error";
+					}
+			 break; 		
+					
+			 case "delete_pic":
+			 
+			 	$filename = (isset($_GET['filename'])) ? $_GET['filename'] : '';
+				$config['upload_path'] = './uploads/'; 
+				$response = array();
+				$checkFile = $this->deleteFiles($config['upload_path'], $filename);
+				if ($checkFile == 1){
+					$fullpath = $config['upload_path'].$filename;
+					unlink($fullpath );
+					$response['success'] = 1;
+					
+				}else {
+					$response['success'] = 0;
+
+				}
+				
+				echo json_encode($response);
+		
+			 		
+			 break;	
+			 
+			 case "update_record" :
+			 	$title = (isset($_GET['title'])) ? $this->security->xss_clean($_GET['title']) : '';
+			 	$image = (isset($_GET['uploadimage'])) ? $this->security->xss_clean($_GET['uploadimage']) : '';
+				$house = (isset($_GET['house'])) ? $this->security->xss_clean($_GET['house']) : '';
+				$street = (isset($_GET['street'])) ? $this->security->xss_clean($_GET['street']) : '';
+				$brgy = (isset($_GET['brgy'])) ? $this->security->xss_clean($_GET['brgy']) : '';
+				$lat = (isset($_GET['lat'])) ? $this->security->xss_clean($_GET['lat']) : '';
+				$long = (isset($_GET['long'])) ? $this->security->xss_clean($_GET['long']) : '';
+				$desc = (isset($_GET['txtdesc'])) ? $this->security->xss_clean($_GET['txtdesc']) : '';
+				$location_id = (isset($_GET['location_id'])) ? $this->security->xss_clean($_GET['location_id']) : '';
+				echo $location_id;
+				$data = array(
+				   'Title' => $title,
+				   'lat' => $lat,
+				   'long' => $long ,
+				   'house_number' => $house,
+				   'street_name' => $street,
+				   'barangay' =>  $brgy,
+				);
+				
+				$message = "<p class=\"alert alert-warning\">You have successfully Updated the Data</p>";
+				$this->session->set_flashdata("message", $message);
+				$this->db->where('id', $location_id);
+				
+				
+				if ($image){
+					foreach ($image as $key=>$val){
+							$imageData = array(
+							   'location_id' => $location_id,
+							   'image_name' => $title ,
+							   'image_location' => $val,
+							  
+							);
+							
+							$this->db->update('images', $imageData); 
+					}
+				}
+				$url = 'location/addlocation/'.$location_id;
+				$this->db->update('location', $data); 
+				redirect($url);
+			 break;
+					 
+					
+		
+			
 		}
 		
 	}
@@ -136,6 +263,18 @@ class Location extends CI_Controller {
 		 if(!$this->session->userdata('isLogin')){
 			redirect('login');
 		 }
+	}
+	
+	
+	private function deleteFiles($path, $filename){
+		$arr = array();
+    	if (file_exists($path.$filename)) {
+			return 1;
+		} else {
+			return 0;
+		}
+		
+		return $arr;
 	}
 	
 	

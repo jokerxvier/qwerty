@@ -11,8 +11,9 @@ class Location_model extends CI_Model{
 	}
 	
 	public function fetch_merchant($limit, $start){
-		$this->db->order_by("location.created_at", "desc"); 
+		$this->db->order_by("locate.created_at", "desc"); 
 		$this->db->limit($limit, $start);
+		$this->db->group_by("locate.id"); 
 		$this->db->select('locate.*, loc_category.icon, loc_category.cat_name');
 		$this->db->from('location AS locate');
 		$this->db->join('loc_category', 'locate.cat_id = loc_category.id', 'left');
@@ -40,6 +41,46 @@ class Location_model extends CI_Model{
 		$query = $this->db->get($db);
 		return $query->result();
 	}
+	
+	function get_AllRecordsByCat(){
+		$this->db->order_by("locate.created_at", "desc"); 
+		$this->db->group_by("locate.id"); 
+		$this->db->select('locate.*, loc_category.icon, loc_category.cat_name');
+		$this->db->from('location AS locate');
+		$this->db->join('loc_category', 'locate.cat_id = loc_category.id', 'left');
+		
+		
+		$query = $this->db->get("location");
+		if($query->num_rows() > 0){
+			foreach($query->result() as $row){
+				$data[] = $row;
+			}
+			return $data;
+		}
+		
+		return false;
+	}
+	
+	public function displayEditData($id){
+		$this->db->order_by("locate.created_at", "desc"); 
+		$this->db->group_by("locate.id"); 
+		$this->db->select('locate.*, loc_category.icon, loc_category.cat_name');
+		$this->db->from('location AS locate');
+		$this->db->join('loc_category', 'locate.cat_id = loc_category.id', 'left');
+		$this->db->where('locate.id', $id);
+		
+		
+		$query = $this->db->get("location");
+		if($query->num_rows() > 0){
+			foreach($query->result() as $row){
+				$data[] = $row;
+			}
+			return $data;
+		}
+		
+		return false;
+	}
+	
 	
 	
 	function add_record($data)

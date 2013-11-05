@@ -15,6 +15,85 @@ var locationJS = (function (parent, $) {
 			
 			var flag = false;
 			
+			
+			
+			
+			
+			
+			
+			Location.viewMap = function (url){
+				$('.viewMapBtn').on('click', function (){
+						$('#myMapModal').modal('show');
+						
+						var params = {
+							'action': 'searchmap',
+						}
+						
+						var ajaxUrl = url + 'location/process'
+						var result = _ajaxResult(ajaxUrl, params);
+						_googleMapViewAll(result, url);
+						
+						
+				});
+				
+				
+				
+			}
+			
+			Location.deletePic = function (url, filename){
+				$('.success img.btn-delete').on('click', function (){
+					var params = {
+						  'action' : 'delete_pic',
+						  'filename' : filename
+					}
+					
+					
+					var ajaxUrl = url + 'location/process';
+					var result = _ajaxResult(ajaxUrl, params);
+					
+					if(result.success === 1){
+							var del = $(this).parent();
+							del.fadeOut('slow', function() { del.remove(); });
+					}
+					
+				});
+				
+				
+				
+			}
+			
+			Location.uploadFile = function (url){
+				
+				var btnUpload=$('.fileupload-new');
+					var status=$('#status');
+					new AjaxUpload(btnUpload, {
+						action: url + 'location/process?action=uploadpic',
+						name: 'uploadfile',
+						onSubmit: function(file, ext){
+							 if (! (ext && /^(jpg|png|jpeg|gif)$/.test(ext))){ 
+								// extension is not allowed 
+								status.text('Only JPG, PNG or GIF files are allowed');
+								return false;
+							}
+							status.text('Uploading...');
+						},
+						onComplete: function(file, response){
+							//On completion clear the status
+							status.text('');
+							
+							//Add uploaded file to list
+							if(response==="success"){
+									//$('<li></li>').appendTo('#files').html('<img class="btn-delete" src="http://cdn1.iconfinder.com/data/icons/diagona/icon/16/101.png"/><img src="'+url+'/uploads/'+file+'" alt="" /><br />').addClass('success');			
+								$('<li></li>').appendTo('#files').html('<input type="text" value="'+url+'/uploads/'+file+'"  name="uploadimage[]"/><img src="'+url+'/uploads/'+file+'" alt="" style="width: 100px; height: 100px;" /><br />').addClass('success');			
+								//Location.deletePic(url, file);
+								
+							} else{
+								$('<li></li>').appendTo('#files').text(file).addClass('error');
+							}
+						}
+					});
+			}
+			
 
 			Location.addLocation = function (url){
 				$('.location-page-two').hide();
@@ -41,12 +120,9 @@ var locationJS = (function (parent, $) {
 							});
 
 							// e.preventDefault();	
-								
-					
+
 				});
-				
-				
-				
+
 
 			}
 			
@@ -92,16 +168,11 @@ var locationJS = (function (parent, $) {
 								
 									
 								});
-								
-									
-									
-
-													
+					
 						  }else {
 							  console.log('failed');
 						  }
-						  
-						  
+
 					  }, //end success
 					  
 					  beforeSend: function( jn ) {
@@ -110,6 +181,17 @@ var locationJS = (function (parent, $) {
 					  }
 				});
 			}
+			
+			Location.displayMap = function (url){
+				var lat = $('.lat').val();
+				var long = $('.long').val();
+				var icon = $('.icon').val();
+				_googleMap(lat,long, url, icon)
+				
+			}
+			
+			
+			
 			
 			
 			
@@ -127,8 +209,35 @@ var locationJS = (function (parent, $) {
 						 }
 
 						  
-					  } //end success
+					  }, //end success
 					  
+					  beforeSend: function( jn ) {
+							  $('.loader').addClass('preloader');
+							  //_seal();
+					  }
+					  
+					
+				});
+				
+				
+				return data;
+				
+				
+			}
+			
+			_ajaxResult = Location._ajaxResult= Location._ajaxResult || function (ajaxUrl, params){
+					var data;
+					$.ajax({
+					  url: ajaxUrl,
+					  async: false, 
+					  dataType: 'json',
+					  data: params,
+					  success: function (result) {
+					
+						data = result;
+						  
+					  }, //end success
+
 					
 				});
 				
@@ -152,8 +261,8 @@ var locationJS = (function (parent, $) {
 						  'brgy' : _encodeUrl(brgy.val()),
 						  'postal' : _encodeUrl(postal.val()),
 						  'cat' : _encodeUrl($('.category').val()),
-						  'lat' : _encodeUrl(lat),
-						  'lng' : _encodeUrl(lng)
+						  'lat' : _encodeUrl($('#lat').val()),
+						  'lng' : _encodeUrl($('#long').val())
 
 					  },
 					  success: function (data) {
@@ -195,22 +304,87 @@ var locationJS = (function (parent, $) {
 				  }
 				 
 				 var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-				 var google_image = url + 'assets/' +icon;
+				 var google_image = false;
+				 if (icon) {
+					 google_image = url + 'assets/' +icon;
+				 }
+				
 
 				  var marker = new google.maps.Marker({
 					  position: myLatlng,
 					  map: map,
+					  draggable:true,	
 					  icon: google_image
 				  });
 				  
 				  var infowindow = new google.maps.InfoWindow();
 				  
-				  google.maps.event.addListener(marker, 'click', (function(marker) {
+				  google.maps.event.addListener(marker, 'dragend',  (function(marker) {
 					return function() {
 
 					  infowindow.open(map, marker);
+					  var point = marker.getPosition();
+				
+					 document.getElementById('lat').value=point.lat();
+					 document.getElementById('long').value=point.lng();
 					}
      			 })(marker));
+			}
+			
+			
+			_googleMapViewAll = Location._googleMapViewAll = Location._googleMapViewAll || function (args, url){
+	
+					
+			   
+				 var latlng = new google.maps.LatLng(args[0].lat,args[0].long);
+				 var myOptions = {
+					center: latlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					mapTypeControl: false,
+					
+				};
+				
+				var map = new google.maps.Map(document.getElementById("map-view"),myOptions);
+				var infowindow = new google.maps.InfoWindow(); 
+				var marker, i;
+				var bounds = new google.maps.LatLngBounds();
+				$.each(args, function(i, item) {
+						//item.lat
+						//item.long
+						
+						var address = item.house_number+', '+item.street_number+ ', '+ item.barangay;
+						var pos = new google.maps.LatLng(item.lat, item.long);
+						var google_image = url + 'assets/' +item.icon;
+						bounds.extend(pos);
+						 marker = new google.maps.Marker({
+							position: pos,
+							map: map,
+							icon: google_image
+						});
+						
+						
+						google.maps.event.addListener(marker, 'click', (function(marker) {
+							return function() {
+								 infowindow.setContent(item.Title);
+               					 infowindow.open(map, marker);
+							}
+						})(marker));
+						
+					map.fitBounds(bounds);	
+					var listener = google.maps.event.addListener(map, "idle", function () {
+						var opt = { minZoom: 13, maxZoom: 20 };
+						map.setOptions(opt);
+						map.setCenter(latlng); 
+						google.maps.event.removeListener(listener);
+						google.maps.event.trigger(map, 'resize');
+
+					});
+					
+			
+				});
+
+				
+				
 			}
 			
 		  return parent; 
